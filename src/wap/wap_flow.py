@@ -39,8 +39,9 @@ def source_to_iceberg_table(
 
     """
     get_transaction().set("bauplan_ingestion_branch", bauplan_ingestion_branch)
+    # since this is a demo, we delete the branch if it exists
     if bauplan_client.has_branch(bauplan_ingestion_branch):
-        raise ValueError("Branch already exists, please choose another name")
+        bauplan_client.delete_branch(bauplan_ingestion_branch)
 
     # create the branch from main HEAD
     bauplan_client.create_branch(bauplan_ingestion_branch, from_ref="main")
@@ -57,7 +58,7 @@ def source_to_iceberg_table(
     )
     # we check if the table is there (and learn a new API method ;-))
     fq_name = f"{namespace}.{table_name}"
-    assert bauplan_client.has_table(table=fq_name, branch=bauplan_ingestion_branch), (
+    assert bauplan_client.has_table(table=fq_name, ref=bauplan_ingestion_branch), (
         "Table not found"
     )
     is_imported = bauplan_client.import_data(
@@ -85,7 +86,7 @@ def run_quality_checks(
     # we retrieve the data and check if the table is column has any nulls
     # make sure the column you're checking is in the table, so change this appropriately
     # if you're using a different dataset
-    column_to_check = "age"
+    column_to_check = "Age"
     # NOTE if you don't want to use any SQL, you can interact with the lakehouse in pure Python
     # and still back an Arrow table (in this one column) through a performant scan.
     print("Perform a S3 columnar scan on the column {}".format(column_to_check))

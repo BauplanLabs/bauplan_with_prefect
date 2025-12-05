@@ -28,6 +28,10 @@ In particular, we will leverage [Prefect transactions](https://docs-3.prefect.io
 
 Make sure to have run `uv sync` in the root of the repo to install dependencies and set up your Bauplan key for the public sandbox.
 
+### Dataset
+
+The current data checks assume you are ingesting the titanic dataset, as for example available [here](https://raw.githubusercontent.com/datasciencedojo/datasets/refs/heads/master/titanic.csv). Make sure to load the csv in a S3 bucket with public read and list access, so that the Bauplan sandbox can access it. If you want to use a different dataset, please adjust the column name in the `wap_flow.py` file accordingly.
+
 ## Run the flow
 
 Start a local Prefect server and take note of the URL:
@@ -39,7 +43,6 @@ uv run prefect server start
 Then, in a separate terminal, set up the connection and run the flow:
 
 ```bash
-cd src
 uv run prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
 uv run wap_flow.py --table_name <table_name> --branch_name <branch_name> --s3_path s3://a-public-bucket/your-data.csv
 ```

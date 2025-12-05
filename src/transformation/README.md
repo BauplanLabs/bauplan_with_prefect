@@ -9,7 +9,7 @@ A small reference implementation of data transformations using Bauplan models, w
 
 Make sure to have run `uv sync` in the root of the repo to install dependencies and set up your Bauplan key for the public sandbox.
 
-## Dataset
+### Dataset
 
 We will be working with the [taxi metadata csv file](https://www.kaggle.com/datasets/usmanshams/nyc-yellow-taxi-dataset-2024/), which we will join with the existing `taxi_fhvhv` table in the Bauplan public sandbox. Make sure to load the csv in a S3 bucket with public read and list access, so that the Bauplan sandbox can access it.
 
