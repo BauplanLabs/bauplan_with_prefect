@@ -7,10 +7,11 @@ client = bauplan.Client()
 user_name = client.info().user.username
 branch_name = f"{user_name}.taxi_zones_prefect"
 
+# Streamlit app title
 st.title("NYC Taxi Trip Miles by Borough")
-st.write(f"Querying data from the `my_child` table in branch '{branch_name}' using Bauplan")
-
-
+st.write(
+    f"Querying data from the `my_child` table in branch '{branch_name}' using Bauplan"
+)
 
 # Query the my_child table
 with st.spinner("Fetching data from Bauplan..."):

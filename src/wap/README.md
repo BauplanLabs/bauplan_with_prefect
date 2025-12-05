@@ -5,7 +5,7 @@ A reference implementation of write-audit-publish (WAP) with Bauplan and Prefect
 
 A common need on S3-backed analytics systems (e.g. a data lakehouse) is safely ingesting new data into tables available to downstream consumers. 
 
-![WAP](img/wap.jpg)
+![WAP](../../img/wap.jpg)
 
 Due to their distributed nature and large quantity of data to be bulk-inserted, a lakehouse ingestion is more delicate than the equivalent operation on a traditional database.
 
@@ -22,7 +22,7 @@ In particular, we will leverage [Prefect transactions](https://docs-3.prefect.io
 * For a longer discussion on the context behind the project and the trade-offs involved, please refer to our [blog post](https://www.prefect.io/blog/prefect-on-the-lakehouse-write-audit-publish-pattern-with-bauplan).
 * To get a quick feeling on the developer experience, check out this [demo video](https://www.loom.com/share/0387703f204e4b3680b1cb14302a04da?sid=536f3a9f-c590-4548-a3c2-b5861b8c17c0).
 
-![Lakhouse flow](img/flow.jpg)
+![Lakhouse flow](../../img/flow.jpg)
 
 ## Setup
 
@@ -48,7 +48,7 @@ This is a [video demonstration](https://www.loom.com/share/0387703f204e4b3680b1c
 
 Through the Prefect server, you can visualize the flow in the UI, e.g. you can check the latest run:
 
-![prefect UI](img/UI.png)
+![prefect UI](../../img/UI.png)
 
 ## License
 
