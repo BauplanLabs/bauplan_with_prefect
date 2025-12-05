@@ -1,29 +1,9 @@
-# Write-Audit-Publish with Bauplan and Prefect
-A reference implementation of the write-audit-publish pattern with Bauplan and Prefect 3.0
+# Bauplan + Prefect
+A collection of reference implementations for lakehouse patterns with Bauplan and Prefect 3.0
 
 ## Overview
 
-A common need on S3-backed analytics systems (e.g. a data lakehouse) is safely ingesting new data into tables available to downstream consumers. 
-
-![WAP](img/wap.jpg)
-
-Due to their distributed nature and large quantity of data to be bulk-inserted, a lakehouse ingestion is more delicate than the equivalent operation on a traditional database.
-
-Data engineering best practices suggest the Write-Audit-Publish (WAP) pattern, which consists of three main logical steps:
-
-* Write: ingest data into a ''staging'' / ''temporary'' section of the lakehouse - the data is not visible yet to downstream consumers;
-* Audit: run quality checks on the data, to verify integrity and quality (avoid the ''garbage in, garbage out'' problem);
-* Publish: if the quality checks succeed, proceed to publish the data to the main section of the lakehouse - the data is now visible to downstream consumers; otherwise, raise an error / clean-up etc.
-
-This repository showcases how [Prefect](https://www.prefect.io/) and [Bauplan](https://www.bauplanlabs.com/) can be used to implement WAP in ~150 lines of no-nonsense pure Python code: no knowledge of the JVM, SQL or Iceberg is required.  
-
-In particular, we will leverage [Prefect transactions](https://docs-3.prefect.io/3.0rc/develop/transactions#write-your-first-transaction) as the ''outer layer'' for safe handling of the relevant _tasks_, and [Bauplan transactions (through branches)](https://docs.bauplanlabs.com/en/latest/tutorial/02_catalog.html) as the ''inner layer'' for safe handling of the relevant _data assets_:
-
-* For a longer discussion on the context behind the project and the trade-offs involved, please refer to our [blog post](https://www.prefect.io/blog/prefect-on-the-lakehouse-write-audit-publish-pattern-with-bauplan).
-* To get a quick feeling on the developer experience, check out this [demo video](https://www.loom.com/share/0387703f204e4b3680b1cb14302a04da?sid=536f3a9f-c590-4548-a3c2-b5861b8c17c0).
-
-![Lakhouse flow](img/flow.jpg)
-
+This repository contains reference implementations of common data engineering patterns using [Bauplan](https://www.bauplanlabs.com/) as the programmable lakehouse and [Prefect](https://www.prefect.io/) for orchestration and scheduling.
 
 ## Setup
 
@@ -33,41 +13,24 @@ Bauplan is the programmable lakehouse: you can load, transform, query data all f
 
 To use Bauplan, you need an API key for our preview environment: you can request one [here](https://www.bauplanlabs.com/#join).
 
-Note: the current SDK version is `0.0.3a243` but it is subject to change as the platform evolves - ping us if you need help with any of the APIs used in this project.
+Note: the current SDK version is `0.0.3a492` but it is subject to change as the platform evolves - ping us if you need help with any of the APIs used in this project.
 
-### Prefect and the Python environment
+### Python environment
 
-Install the required dependencies (Bauplan and Prefect) in a virtual environment:
-
-```bash
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-## Run the flow
-
-Start a local Prefect server and take note of the URL:
+We use [uv](https://docs.astral.sh/uv/getting-started/installation/) to manage the required dependencies - you can synchronize the environment from the root of the repo with:
 
 ```bash
-prefect server start
+uv sync
 ```
 
-Then, in a separate terminal, set up the connection and run the flow:
+## Pattern 1: Python data engineering with Prefect and Bauplan
 
-```bash
-cd src
-prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
-python wap_flow.py --table_name <table_name> --branch_name <branch_name> --s3_path s3://a-public-bucket/your-data.csv
-```
+Check the README in `src/transformation` for a reference implementation of ETL with Bauplan models, Prefect for orchestration and scheduling, and Streamlit for visualization.
 
-This is a [video demonstration](https://www.loom.com/share/0387703f204e4b3680b1cb14302a04da?sid=536f3a9f-c590-4548-a3c2-b5861b8c17c0) of the flow in action, both in case of successful audit and in case of failure.
+## Pattern 2: Write-Audit-Publish (WAP) with Prefect and Bauplan
 
-Through the Prefect server, you can visualize the flow in the UI, e.g. you can check the latest run:
-
-![prefect UI](img/UI.png)
-
+Check the README in `src/wap` for a reference implementation of the Write-Audit-Publish pattern with Bauplan and Prefect.
 
 ## License
 
-The code in the project is licensed under the MIT License (Prefect and Bauplan are owned by their respective owners and have their own licenses). 
+The code in the project is licensed under the MIT License (Prefect and Bauplan are owned by their respective owners and have their own licenses).
