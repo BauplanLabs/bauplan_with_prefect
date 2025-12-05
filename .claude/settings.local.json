@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:docs.bauplanlabs.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

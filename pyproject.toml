@@ -1,0 +1,13 @@
+[project]
+name = "wap-with-bauplan-and-prefect"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "bauplan>=0.0.3a492",
+    "polars>=1.35.2",
+    "prefect>=3.6.5",
+    "python-dotenv>=1.2.1",
+    "streamlit>=1.52.0",
+]
