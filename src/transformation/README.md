@@ -50,8 +50,21 @@ uv run streamlit run app.py
 
 Et voilá - the entire data transformation loop with Bauplan is complete, and it's all Python!
 
-
 ## Productionizing with Prefect
 
-TBC
+Start a local Prefect server and take note of the URL:
 
+```bash
+uv run prefect server start
+```
+
+Then, in a separate terminal, set up the connection and run the flow:
+
+```bash
+uv run prefect config set PREFECT_API_URL=http://127.0.0.1:4200/api
+uv run meta_flow.py --branch_name <branch_name>
+```
+
+## License
+
+The code in the project is licensed under the MIT License (Prefect and Bauplan are owned by their respective owners and have their own licenses). 
