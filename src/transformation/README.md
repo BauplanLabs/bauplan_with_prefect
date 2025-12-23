@@ -29,8 +29,9 @@ bauplan branch checkout <user_name>.taxi_zones_prefect
 We then create a table import a file there with taxi zone metadata:
 
 ```bash
-bauplan table create --name taxi_metadata --search-uri s3://<bucket>/taxi_zone_lookup.csv 
-bauplan table import --name taxi_metadata --search-uri s3://<bucket>/taxi_zone_lookup.csv 
+source .env
+bauplan table create --name taxi_metadata --search-uri $TAXI_ZONE_LOOKUP_FILE
+bauplan table import --name taxi_metadata --search-uri $TAXI_ZONE_LOOKUP_FILE
 ``` 
 
 Finally, we can run the pipeline:
@@ -49,7 +50,7 @@ bauplan query "SELECT COUNT(*) FROM my_child"
 Finaly, we can open the streamlit app to visualize the results in a nice dashboard:
 
 ```bash
-uv run streamlit run app.py
+uv run streamlit run ../app.py
 ```
 
 Et voilá - the entire data transformation loop with Bauplan is complete, and it's all Python!
